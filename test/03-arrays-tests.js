@@ -228,14 +228,13 @@ describe('03-arrays-tasks', () => {
         expected: ['x', 1, 'b', 'c'],
       },
     ].forEach((data) => {
-      tasks.insertItem(data.arr, data.item, data.index);
+      // tasks.insertItem(data.arr, data.item, data.index);
       assert.deepEqual(
-        data.arr,
         data.expected,
+        tasks.insertItem(data.arr, data.item, data.index),   // исправлено
       );
     });
   });
-
 
   it.optional('getHead should return the n first items from the specified array', () => {
     [
