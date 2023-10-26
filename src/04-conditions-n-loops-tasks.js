@@ -281,8 +281,17 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const ccnDigits = ccn.toString().split('').map((item) => +item);
+  const controlDigit = ccnDigits.pop();
+  const sumDigit = ccnDigits.reverse().reduce((a, item, ind) => {
+    let i = 0;
+    if (!(ind % 2)) i = (2 * item).toString().split('').map((it) => +it).reduce((s, e) => s + e);
+    else i = item;
+    return a + i;
+  }, 0);
+  const calcControl = (10 - (sumDigit % 10)) % 10;
+  return calcControl === controlDigit;
 }
 
 /**
@@ -299,8 +308,12 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  let res = num;
+  while (res > 9) {
+    res = res.toString().split('').reduce((a, i) => a + +i, 0);
+  }
+  return res;
 }
 
 
@@ -325,8 +338,25 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const brackets = {
+    open: '[{(<',
+    close: ']})>',
+  };
+  const stack = [];
+  let res = false;
+  str.split('').forEach((char) => {
+    if (brackets.open.includes(char)) stack.push(char);
+    else if (stack.length) {
+      if (brackets.close.indexOf(char) === brackets.open.indexOf(stack.at(-1))) {
+        stack.pop();
+      } else {
+        stack.push('!');
+      }
+    } else stack.push('!');
+  });
+  if (!(stack.length)) res = true;
+  return res;
 }
 
 
@@ -350,8 +380,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
@@ -367,8 +397,8 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  
 }
 
 
