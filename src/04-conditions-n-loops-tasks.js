@@ -398,7 +398,16 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-  
+  const pathesArr = pathes.map((item) => item.split('/'));
+  const commonDir = [];
+  let tempArr = [];
+  const minLength = Math.min(...pathesArr.map((item) => item.length));
+  for (let j = 0; j < minLength; j += 1) {
+    tempArr = pathesArr.map((item) => item[j]).sort();
+    if (tempArr[0] === tempArr.at(-1)) commonDir.push(tempArr[0]);
+    else break;
+  }
+  return commonDir.concat('').join('/');
 }
 
 
