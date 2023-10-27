@@ -429,8 +429,21 @@ function getCommonDirectoryPath(pathes) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const m = m1.length;
+  const n = m2.length;
+  const p = m2[0].length;
+  const c = [];
+  for (let i = 0; i < m; i += 1) {
+    c.push([]);
+    for (let j = 0; j < p; j += 1) {
+      c[i][j] = 0;
+      for (let k = 0; k < n; k += 1) {
+        c[i][j] += m1[i][k] * m2[k][j];
+      }
+    }
+  }
+  return c;
 }
 
 
@@ -464,8 +477,53 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const xo = position.map((row) => row.map((item) => {
+    let b = 0;
+    switch (item) {
+      case '0': b = -1;
+        break;
+      case 'X': b = 1;
+        break;
+      default: b = 0;
+    }
+    return b;
+  }));
+  let res;
+  let s;
+  const d = [0, 0];
+  for (let i = 0; i < 3; i += 1) {
+    switch (xo[i].reduce((a, item) => a + item, 0)) {
+      case 3: res = 'X';
+        break;
+      case -3: res = '0';
+        break;
+      default: if (!res) res = undefined;
+    }
+    s = 0;
+    for (let j = 0; j < 3; j += 1) {
+      s += xo[j][i];
+    }
+    switch (s) {
+      case 3: res = 'X';
+        break;
+      case -3: res = '0';
+        break;
+      default: if (!res) res = undefined;
+    }
+    d[0] += xo[i][i];
+    d[1] += xo[i][2 - i];
+  }
+  d.forEach((item) => {
+    switch (item) {
+      case 3: res = 'X';
+        break;
+      case -3: res = '0';
+        break;
+      default: if (!res) res = undefined;
+    }
+  });
+  return res;
 }
 
 
